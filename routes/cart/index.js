@@ -4,9 +4,17 @@ const cartController = require('../../controllers/cart.controller');
 const authentication = require('../../middlewares/authentication');
 
 /**
+ * @route POST /cart/create 
+ * @description  
+    Create a new cart 
+ * @body 
+ * @access Public
+ */
+router.post('/create', cartController.createNewCart)
+
+/**
  * @route POST /cart 
  * @description  
- * create a cart if user add 1 product 
  * check cart existed 
  * check product existed in cart => Y: update quantity || N: create new product in cart
  * @body {

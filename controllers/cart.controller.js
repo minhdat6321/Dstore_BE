@@ -77,6 +77,19 @@ const updateUserCartQuantity = async ({ currentUserId, product, isIncrement }) =
 
 const cartController = {};
 
+cartController.createNewCart = catchAsync(async (req, res, next) => {
+  const currentUserId = req.body.userId;
+
+  // Check if product exists
+  const userCart = await Cart.create({
+    cart_state: "active",
+    _id: currentUserId,
+    cart_userId: currentUserId
+  })
+
+  sendResponse(res, 200, true, userCart, null, "Create a new cart successfully");
+});
+
 // POST: Add Product to Cart
 cartController.addToCartByProductId = catchAsync(async (req, res, next) => {
   const currentUserId = req.userId;
