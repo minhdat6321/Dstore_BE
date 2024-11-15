@@ -1,4 +1,5 @@
 const { sendResponse, AppError, catchAsync } = require("../helpers/utils");
+const Cart = require("../models/Cart");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const userController = {};
@@ -17,6 +18,11 @@ userController.register = catchAsync(async (req, res, next) => {
   user = await User.create({ firstName, lastName, phone, email, password });
   const accessToken = await user.generateToken();
 
+  const userCart = await Cart.create({
+    cart_state: "active",
+    _id: user._id,
+    cart_userId: user._id
+  })
   // response
   sendResponse(res, 200, true, user, null, "create user successfully");
 });
